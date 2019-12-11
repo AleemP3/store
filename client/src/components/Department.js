@@ -55,7 +55,7 @@ class Department extends React.Component {
     return (
       <Container>
         <Header as="h1" style={{textAlign: "Center"}}>{name}</Header>
-        <Button as={Link} to={`/departments/${this.state.department.id}/item/new`}
+        <Button as={Link} to={`/departments/${this.state.department.id}/items/new`}
           color="blue"
         >
           Add Item
