@@ -14,6 +14,11 @@ const Navbar = () => (
         Departments
       </Menu.Item>
     </Link>
+    <Link to="/departments/new">
+      <Menu.Item>
+        Add Departments
+      </Menu.Item>
+    </Link>
   </Menu>
 )
 
