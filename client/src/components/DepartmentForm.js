@@ -1,11 +1,16 @@
 import React, {  } from 'react';
-import { Form, } from "semantic-ui-react";
+import { Form, Button } from "semantic-ui-react";
 import axios from "axios"; 
 
 
 class DepartmentForm extends React.Component {
 
 state = { name: "" }
+
+componentDidMount() {
+  if (this.props.match.params.id)
+  this.setState({name: this.props.match.params.name})
+}
 
 
 handleChange = (e) => {
@@ -14,15 +19,23 @@ handleChange = (e) => {
 
 submit = (e) => {
   e.preventDefault(); 
+  if (this.props.match.params.id) {
+  axios.put(`/api/departments/${this.props.match.params.id}`, this.state)
+  .then(res => {
+    this.props.history.push("/departments")
+  }) } 
+  else {
   axios.post("/api/departments", this.state)
     .then(res => {
       this.props.history.push("/departments")
     })
+  }
     this.setState({name: "" });
 }
 
   render() {
     return (
+      <>
       <Form onSubmit={this.submit}>
         <Form.Input 
           name="name"
@@ -33,7 +46,10 @@ submit = (e) => {
           required
         />
         <Form.Button color="blue">Submit</Form.Button>
+        <br />
+        <Button color="yellow" onClick={() => this.props.history.goBack()}>Back</Button>
       </Form>
+      </>
     );
   };
 };

@@ -7,6 +7,14 @@ class ItemForm extends React.Component {
 
 state = { name: "", description: "", cost: "" }
 
+componentDidMount() {
+  if (this.props.match.params.id)
+  this.setState({ name: this.props.match.params.name , 
+    description: this.props.match.params.description,
+    cost: this.props.match.params.cost
+  })
+}
+
 
 handleChange = (e) => {
   this.setState({ [e.target.name]: e.target.value })
@@ -14,10 +22,18 @@ handleChange = (e) => {
 
 submit = (e) => {
   e.preventDefault(); 
+  if (this.props.match.params.id) {
+    axios.put(`/api/departments/${this.props.match.params.department_id}/items/${this.props.match.params.id}`, this.state)
+    .then(res => {
+      this.props.history.push(`/departments/${this.props.match.params.department_id}`)
+    })
+  } 
+  else {
   axios.post(`/api/departments/${this.props.match.params.id}/items`, this.state)
     .then(res => {
       this.props.history.push(`/departments/${this.props.match.params.id}`)
     })
+  }
     this.setState({name: "", description: "", cost: "" });
 }
 
