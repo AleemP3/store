@@ -1,11 +1,9 @@
 import React, { } from 'react';
 import { Container, Header, Card, Button} from "semantic-ui-react";
 import { Link, } from 'react-router-dom';
-
 import axios from "axios"; 
-
-
-
+import styled from 'styled-components';
+import ButtonLink from "./ButtonStyle";
 
 class Department extends React.Component {
 
@@ -23,7 +21,7 @@ class Department extends React.Component {
     }
 
 
-    renderItems = () => {
+  renderItems = () => {
       if (this.state.items.length <= 0)
       return <h2>No Products</h2>
     return this.state.items.map( item => (
@@ -35,11 +33,11 @@ class Department extends React.Component {
           </Card.Description>
         </Card.Content>
         <Card.Content extra>
-          <Button color="red" onClick={() => this.deleteItem(item.id)}>Delete</Button>
-          <Button color="green" as={Link} 
+          <ButtonStyle onClick={() => this.deleteItem(item.id)}>Delete</ButtonStyle>
+          <ButtonLink as={Link} 
           to={`/departments/${this.props.match.params.id}/edititem/${item.id}/${item.name}/${item.description}/${item.cost}`}>
             Edit
-          </Button>
+          </ButtonLink>
         </Card.Content>
       </Card>
       ))
@@ -71,5 +69,20 @@ class Department extends React.Component {
     );
   };
 };
+
+const ButtonStyle = styled(Button)`
+  display: flex;
+  background: #ffad99 !important;
+  padding: 15px 25px;
+  justify-content: center;
+  transition: background 0.5s ease;
+  cursor: pointer;
+
+  
+  &:hover {
+    background: #ff3300 !important;
+    transition: background 0.5s ease;
+  }
+`;
 
 export default Department;
